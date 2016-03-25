@@ -174,6 +174,7 @@ class TestCase1(unittest.TestCase):
         c1.add_student(s)
 
         with self.assertRaises(IndexError):
+            #TODO mock input of "1"
             c1.get_student_from_list()
 
 if __name__ == '__main__':

@@ -78,8 +78,10 @@ class Teacher(User):
     def get_course_from_list(self):
         for index, course in enumerate(self.courses):
             print("[%s] %s" % (index, course))
-            #TODO validate input
-        return input("Enter id of course: ")
+        inpu = int(input("Enter id of course: "))
+        if not inpu in range(len(index) - 1):
+            raise IndexError
+        return inpu
 
     def __str__(self):
         return "Student: {name:%s, year_level:%s, student_number:%s, gwa:%s}" % (self.name,
@@ -133,7 +135,7 @@ class Course(object):
 
         #TODO raise Error
         if (self.is_full()):
-            print("is full")
+            raise IndexError
         else:
             grade_dict = {
                 'student':new_student,

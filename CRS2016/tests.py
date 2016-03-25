@@ -131,13 +131,13 @@ class TestCase1(unittest.TestCase):
         a = Admin("n")
         a.create_teacher("c")
 
-        assert len(teachers) == 1
+        self.assertEqual(len(teachers), 1)
 
     def test_admin_add_student(self):
         a = Admin("n")
         a.create_student("c", 5)
 
-        assert len(students) == 1
+        self.assertEqual(len(students), 1)
 
     def test_course_has_student(self):
         c1 = Course("PLD", 2)
@@ -146,7 +146,7 @@ class TestCase1(unittest.TestCase):
 
         c1.add_student(s)
 
-        assert c1.has_student(s) == True
+        self.assertEqual(c1.has_student(s), True)
 
     def test_block_can_add_course(self):
         c1 = Course("PLD", 2)
@@ -155,9 +155,9 @@ class TestCase1(unittest.TestCase):
 
         b = Block()
 
-        assert b.can_add_course(c1) == True
+        self.assertEqual(b.can_add_course(c1), True)
 
-    def test_block_can_add_course2(self):
+    def test_block_cannot_add_course2(self):
         c1 = Course("PLD", 2)
         c2 = Course("PLD", 2)
         s = Student("jat", 1)
@@ -166,7 +166,15 @@ class TestCase1(unittest.TestCase):
 
         b = Block()
         b.add_course(c1)
-        assert b.can_add_course(c2) == False
+        self.assertEqual(b.can_add_course(c2), False)
+
+    def test_index_error(self):
+        c1 = Course("PLD", 2)
+        s = Student("jat", 1)
+        c1.add_student(s)
+
+        with self.assertRaises(IndexError):
+            c1.get_student_from_list()
 
 if __name__ == '__main__':
     unittest.main()

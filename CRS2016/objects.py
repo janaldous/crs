@@ -69,7 +69,7 @@ class Teacher(User):
         course_index = int(self.get_course_from_list())
         #choose student
         course = self.courses[course_index]
-        student_index = int(course.print_students())
+        student_index = int(course.get_student_from_list())
         #set grade
         grade = int(input("Enter grade: "))
         course.set_grade_via_index(student_index, grade)
@@ -174,13 +174,16 @@ class Course(object):
             if st['student'] == student:
                 return st['grade']
 
-    def print_students(self):
+    def get_student_from_list(self):
         if len(self.students) == 0:
             return "There are no students in this course"
         for index, student in enumerate(self.students):
             print("[%s] %s" % (index, str(student['student'])))
-            #TODO validate input
-        return input("Enter id of student: ")
+
+        inp = int(input("Enter id of student: "))
+        if not inp in range(len(student)-1):
+            raise IndexError
+        return inp
 
     def has_student(self, student):
         for st in self.students:
@@ -198,6 +201,7 @@ class Block(object):
     def can_add_course(self, course):
         #check if has same students as courses
         for c in courses:
+            print(c.students)
             for student in course.students:
                 print(student)
                 if c.has_student(student):
